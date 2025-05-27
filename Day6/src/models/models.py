@@ -1,63 +1,8 @@
-from sqlalchemy import Boolean, Column, Integer, String, Text, ForeignKey, DateTime, Table, Float
+from sqlalchemy import Boolean, Column, Integer, String, ForeignKey, Float
 from sqlalchemy.orm import relationship, declarative_base
-from database import datetime
 
 Base = declarative_base()
 
-# Связующая таблица для статьи и авторов
-product_users = Table(
-    "product_users",
-    Base.metadata,
-    Column ("product_id", ForeignKey ("product.id"), primary_key = True),
-    Column ("user_id", ForeignKey ("user.id"), primary_key = True)
-)
-
-class User (Base):
-    __tablename__ = "users"
-
-    id = Column (Integer, primary_key = True)
-    full_name = Column (String, nullable = False)
-    email = Column (String, unique = True, nullable = False)
-
-    products = relationship ("Product", secondary = product_users, back_populates = "users")
-
-class Category (Base):
-    __tablename__ = "categories"
-
-    id = Column (Integer, primary_key = True)
-    name = Column (String, unique = True, nullable = False)
-
-class Product (Base):
-    __tablename__ = "products"
-
-    id = Column (Integer, primary_key = True)
-    title = Column (String, nullable = False)
-    content = Column (Text, nullable = False)
-    published_at = Column (DateTime, default = datetime.utcnow)
-    category_id = Column (Integer, ForeignKey("categories.id"))
-
-    category = relationship ("Category")
-    users = relationship ("User", secondary = product_users, back_populates = "products")
-    reviews = relationship ("Review", back_populates = "product")
-
-class Review (Base):
-    __tablename__ = "reviews"
-
-    id = Column (Integer, primary_key = True)
-    reviewer_name = Column (String, nullable = False)
-    comment = Column (Text)
-    rating = Column (Float, nullable = False)
-    created_at = Column (DateTime, default = datetime.utcnow)
-
-    product_id = Column (Integer, ForeignKey("products.id"))
-    product = relationship ("Product", back_populates = "reviews")
-
-
-
-
-
-
-##################################### 6 день
 class BodyType (Base):
     __tablename__ = "body_types"
     id = Column(Integer, primary_key = True)
