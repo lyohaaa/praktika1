@@ -1,12 +1,13 @@
 from fastapi import FastAPI
-from src.routers import car, reference, auth
-from src.database import create_test_data
+
+import src.routers.auth_router
+import src.routers.car
+from .database import create_test_data
 
 app = FastAPI()
 
-app.include_router(auth.router)
-app.include_router(car.router)
-app.include_router(reference.router)
+app.include_router(src.routers.auth_router.router)
+app.include_router(src.routers.car.router)
 
 @app.on_event("startup")
 def on_startup():
