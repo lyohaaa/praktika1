@@ -44,33 +44,33 @@ def get_filter_options(db: Session = Depends(get_db)):
         "engine_types": db.query(Car.body_type).distinct.all()
     }
 
-@router.get("/", response_model=List[CarResponse])
-def get_cars(
-    db: Session = Depends(get_db),
-    body_type_id: List[int] | None = Query(default= None),
-    fuel_type_id: List[int] | None = Query(default= None),
-    drive_id: List[int] | None = Query(default= None),
-    transmission_id: List[int] | None = Query(default= None),
-    interior_id: List[int] | None = Query(default= None),
-    engine_id: List[int] | None = Query(default= None),
-    cruise_control: List[bool] | None = Query(default= None),
-):
-    query = db.query(Car)
-    if body_type_id:
-        query = query.filter(Car.body_type_id.in_(body_type_id))
-    if fuel_type_id:
-        query = query.filter(Car.fuel_type_id.in_(fuel_type_id))
-    if drive_id:
-        query = query.filter(Car.drive_id.in_(drive_id))
-    if transmission_id:
-        query = query.filter(Car.transmission_id.in_(transmission_id))
-    if interior_id:
-        query = query.filter(Car.interior_id.in_(interior_id))
-    if engine_id:
-        query = query.filter(Car.engine_id.in_(engine_id))
-    if cruise_control is not None:
-        query = query.filter(Car.cruise_control.in_(cruise_control))
-    return query.all()
+# @router.get("/", response_model=List[CarResponse])
+# def get_cars(
+#     db: Session = Depends(get_db),
+#     body_type_id: List[int] | None,
+#     fuel_type_id: List[int] | None,
+#     drive_id: List[int] | None,
+#     transmission_id: List[int] | None,
+#     interior_id: List[int] | None,
+#     engine_id: List[int] | None,
+#     cruise_control: List[bool] | None
+#     ):
+#      query = db.query(Car)
+#      if body_type_id:
+#          query = query.filter(Car.body_type_id.in_(body_type_id))
+#      if fuel_type_id:
+#          query = query.filter(Car.fuel_type_id.in_(fuel_type_id))
+#      if drive_id:
+#          query = query.filter(Car.drive_id.in_(drive_id))
+#      if transmission_id:
+#          query = query.filter(Car.transmission_id.in_(transmission_id))
+#      if interior_id:
+#          query = query.filter(Car.interior_id.in_(interior_id))
+#      if engine_id:
+#          query = query.filter(Car.engine_id.in_(engine_id))
+#      if cruise_control is not None:
+#          query = query.filter(Car.cruise_control.in_(cruise_control))
+#      return query.all()
 
 @router.post("/", response_model = CarResponse, status_code = 201)
 def create_car(
