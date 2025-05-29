@@ -71,3 +71,81 @@ class UserResponse(BaseModel):
 class LoginRequest(BaseModel):
     email: EmailStr
     password: str
+
+class ReferenceTypeResponse(BaseModel):
+    id: int
+    name: str
+
+    class Config:
+        from_attributes = True
+
+class ReferenceTypeCreate(BaseModel):
+    name: str
+
+class ReferenceTypeUpdate(BaseModel):
+    name: Optional[str] = None
+
+class BodyTypeResponse(ReferenceTypeResponse):
+    pass
+
+class FuelTypeResponse(ReferenceTypeResponse):
+    pass
+
+class DriveTypeResponse(ReferenceTypeResponse):
+    pass
+
+class TransmissionTypeResponse(ReferenceTypeResponse):
+    pass 
+
+class InteriorTypeResponse(ReferenceTypeResponse):
+    pass 
+
+class EngineTypeResponse(ReferenceTypeResponse):
+    pass 
+
+class CarBase(BaseModel):
+    name: str 
+    year: int
+    engine_id: int
+    drive_id: int
+    transmission_id: int
+    interior_id: int
+    fuel_tank_capacity: float
+    fuel_type_id: int
+    cruise_control: bool
+    body_type_id: int
+    max_speed: int
+    fuel_consumption: float
+    price: float
+
+class CarCreate(CarBase):
+    pass 
+
+class CarUpdate(BaseModel):
+    name: Optional[str] = None
+    year: Optional[int] = None
+    engine_id: Optional[str] = None
+    drive_id: Optional[int] = None
+    transmission_id: Optional[str] = None
+    interior_id: Optional[str] = None
+    fuel_tank_capacity: Optional[float] = None
+    fuel_type_id: Optional[int] = None
+    cruise_control: Optional[bool] = None
+    body_type_id: Optional[int] = None
+    max_speed: Optional[int] = None
+    fuel_consumption: Optional[float] = None
+    price: Optional[float] = None
+    url_image: Optional[str] = None
+
+class CarResponse(CarBase):
+    id: int
+    url_image: Optional[str] = None
+    engine: EngineTypeResponse
+    drive: DriveTypeResponse
+    transmission: TransmissionTypeResponse
+    interior: InteriorTypeResponse
+    fuel_type: FuelTypeResponse
+    body_type: BodyTypeResponse
+
+    class Config:
+        from_attributes = True

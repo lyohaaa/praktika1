@@ -57,4 +57,4 @@ class Car (Base):
     interior = relationship ("InteriorType")
     fuel_type = relationship ("FuelType")
     body_type = relationship ("BodyType")
-    orders = relationship ("Order", back_populates = "car")
+    # orders = relationship ("Order", back_populates = "car")
